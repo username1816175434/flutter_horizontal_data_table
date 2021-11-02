@@ -76,6 +76,7 @@ class HorizontalDataTable extends StatefulWidget {
   ///Call HDTRefreshController.refreshCompleted() for finished refresh loading.
   ///Call HDTRefreshController.refreshFailed() for error refresh loading.
   final Function onRefresh;
+  final Function onLoading;
 
   ///This is a wrapper controller for limilating using the available refresh controller function. Currently only refresh fail and complete is implemented.
   final HDTRefreshController htdRefreshController;
@@ -104,6 +105,7 @@ class HorizontalDataTable extends StatefulWidget {
     this.htdRefreshController,
     this.onRefresh,
     this.refreshIndicator,
+    this.onLoading,
   })  : assert(
             (leftSideChildren == null && leftSideItemBuilder != null) ||
                 (leftSideChildren != null),
@@ -449,6 +451,9 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       return SmartRefresher(
         controller: _refreshController,
         onRefresh: widget.onRefresh,
+        enablePullDown: false,
+        enablePullUp: true,
+        onLoading: widget.onLoading,
         header: widget.refreshIndicator,
         child: ListView.separated(
           controller: scrollController,
@@ -463,6 +468,9 @@ class _HorizontalDataTableState extends State<HorizontalDataTable> {
       return SmartRefresher(
         controller: _refreshController,
         onRefresh: widget.onRefresh,
+        enablePullDown: false,
+        enablePullUp: true,
+        onLoading: widget.onLoading,
         header: widget.refreshIndicator,
         child: ListView(
           controller: scrollController,
